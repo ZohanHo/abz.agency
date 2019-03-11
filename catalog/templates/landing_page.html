@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-8" style="background-color: mintcream; border: solid grey 1px">
+                {% load mptt_tags %}
+
+                <ul style="margin: 10px">
+                    {% recursetree employee %}
+                        <li style="list-style-type: none">
+                            <div>
+                                <h4 style="border: solid grey 1px; background-color: orange">ФИО: {{ node.name }} Должность: {{ node.employee_position }}}</h4>
+                                {% if not node.is_leaf_node %}
+                                    <ul class="children">
+                                        {{ children }}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endrecursetree %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
