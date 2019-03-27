@@ -39,7 +39,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'mptt',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'bootstrap3',
 ]
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_URL = "/accounts/login/"
+
+
+SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,6 +98,12 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    # Need to login django admin
+    'django.contrib.auth.backends.ModelBackend',
+    # authentication methods login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -126,7 +147,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static_diploy")
+STATIC_ROOT = os.path.join(BASE_DIR, "static_deploy")
 
 STATIC_URL = '/static/'
 

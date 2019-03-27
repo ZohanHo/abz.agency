@@ -15,7 +15,7 @@
                     {% recursetree employee %}
                         <li style="list-style-type: none">
                             <div>
-                                <h4 style="border: solid grey 1px; background-color: orange">ФИО: {{ node.name }} Должность: {{ node.employee_position }}}</h4>
+                                <h4 style="border: solid grey 1px; background-color: orange">ФИО: {{ node.name }} Должность: {{ node.employee_position_q }}</h4>
                                 {% if not node.is_leaf_node %}
                                     <ul class="children">
                                         {{ children }}

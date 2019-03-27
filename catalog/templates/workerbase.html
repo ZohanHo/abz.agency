@@ -9,22 +9,40 @@
                 <div class="row">
 
 
-                    <div class="col-md-8 offset-2" id="div_tr{{ foo.id }}" style="">
+                    <div class="col-md-8 offset-2" id="" style="">
                         <table style=" width: 100%; background-color:#FDDCA2;">
                             <tr  align="center" valign="center">
                                 <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">
-                                    <a href="">ФИО</a></td>
+                                    <form action="{% url "sort_url" %}">
+                                        <input type="text" class="hidden" name="name" value="name">
+                                        <button style="position: absolute; top: 17px; left: 90px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0;; color: firebrick">ФИО</button>
+                                    </form>
+                                </td>
                                 <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">
-                                    <a href="">Должность</a></td>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 300px">
-                                    <a href="">Дата приема на работу</a></td>
+                                     <form action="{% url "sort_url" %}">
+                                        <input type="text" class="hidden" name="position" value="position">
+                                        <button style="position: absolute; top: 17px; left: 280px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0;; color: firebrick">Должность</button>
+                                    </form>
+                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 150px">
+                                    <form action="{% url "sort_url" %}">
+                                        <input type="text" class="hidden" name="salary" value="salary">
+                                        <button style="position: absolute; top: 17px; left: 480px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0;; color: firebrick">ЗП</button>
+                                    </form>
+                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 180px">
+                                    <form action="{% url "sort_url" %}">
+                                        <input type="text" class="hidden" name="date" value="date">
+                                        <button style="position: absolute; top: 17px; left: 630px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0; color: firebrick">Дата </button>
+                                    </form>
+
                             </tr>
                         </table>
-                        <button style="position: absolute; left: -155px; top: 10px; font-size: 12px" class="btn btn-primary">Добавить сотрудника</button>
+                        {% if request.user.is_authenticated or request.user.is_staff %}
+                        <a href="{% url "create_employee_url" %}"><button style="position: absolute; left: -155px; top: 10px; font-size: 12px" class="btn btn-primary">Добавить сотрудника</button></a>
+                        {% endif %}
                         <div style="position: absolute; right: -175px; top: 10px;">
-                            <form action="" method="get" class="form-inline" style="">
+                            <form action="{% url "search_url" %}" method="get" class="form-inline" style="">
                                 <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-info" type="submit">Search</button>
+                                <button class="btn btn-info" type="submit">Поиск</button>
                             </form>
                         </div>
                     </div>
@@ -38,26 +56,29 @@
             <div class="container" style="border: solid grey 1px; padding: 20px; background-color: blanchedalmond; border-radius: 8px">
                 <div class="row">
                     <div class="col-md-2" id="div_image{{ foo.id }}" style="">
-                        <img style="border: solid grey 1px" width=100px" src="{{ foo.foto_employee.url }}" alt="">
+                        <img style="border: solid grey 1px" width=100px" src="{{ foo.foto_employee.url }}" alt="" >
                     </div>
 
                     <div class="col-md-8" id="div_tr{{ foo.id }}" style="top: 20px">
                         <table style=" width: 100%; border:0; background-color:#faebd7;">
                             <tr  align="left" valign="center">
                                 <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">ФИО: {{ foo.name }} </td>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">Должность: {{ foo.employee_position }}</td>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 300px">Дата приема на работу: {{ foo.date }}</td>
-                                <button style="position: absolute; left: 750px; top: 15px; font-size: 12px" class="btn btn-danger">Удалить</button>
-                                <button style="position: absolute; left: 820px; top: 15px; font-size: 12px" class="btn btn-warning">Редактировать</button>
+                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">Должность: {{ foo.employee_position_q }}</td>
+                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 150px">ЗП: {{ foo.salary_amount }}</td>
+                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width:180px">Дата приема на работу: {{ foo.date }}</td>
+                                {% if request.user.is_authenticated or request.user.is_staff %}
+                                    <a href="{{ foo.get_absolute_url_del }}"><button class="btn btn-danger" form="" style="position: absolute; left: 750px; top: 15px; font-size: 12px">Удалить</button></a>
+                                    <a href="{{ foo.get_absolute_url_update }}"><button style="position: absolute; left: 820px; top: 15px; font-size: 12px" class="btn btn-warning">Редактировать</button></a>
+                                {% endif %}
                             </tr>
-
                         </table>
-
                     </div>
-
                 </div>
             </div>
             <br>
+
+
+
 
         {% endfor %}
 

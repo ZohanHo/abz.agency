@@ -13,6 +13,7 @@ admin.site.register(Position, PositionAdmin)
 class EmployeeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Employee._meta.fields]
 
+
     class Meta:
         model = Employee
 

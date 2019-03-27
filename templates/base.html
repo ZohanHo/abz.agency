@@ -56,8 +56,23 @@
             <div class="col-md-2">
                 <h3><a href="{% url "workerbase" %}">Employee base</a></h3>
             </div>
+            <div class="col-md-6">
+
+            </div>
+             <div class="col-md-3" style="margin-bottom: 7px">
+                <img style="width: 20px" src="{% static "images/user.png" %}" alt="">
+                 {% if user.is_authenticated or request.user.is_staff  %}
+                     <a style="font-size: small; color: black; font-weight: bold;" href="/admin">Пользователь: {{ user }} /</a>
+                    <a style="font-size: small; color: black; font-weight: bold" href="/accounts/logout">Выход</a>
+                    {% else %}
+                    <a style="font-size: 14px; color: black; font-weight: bold" href="/accounts/login/">Вход /</a>
+                     <a style="font-size: 14px; color: black; font-weight: bold" href="/accounts/signup/">Регистрация</a>
+                {% endif %}
+            </div>
+
         </div>
     </div>
+
 
 
     <br>

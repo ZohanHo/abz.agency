@@ -15,9 +15,15 @@ Including another URLconf
 """
 
 from django.urls import path, re_path, include
-from .views import Workerlist, WorkerBase
+from .views import Workerlist, WorkerBase, delemployee, create_employee, save_employee, update_employee, sort, search
 
 urlpatterns = [
     path('', Workerlist, name="workerlist"),
     path('base/', WorkerBase, name="workerbase"),
+    path('base/<pk>/del', delemployee, name="del_employee"),
+    path('base/<pk>/edit', update_employee, name="update_employee_url"),
+    path('base/create/', create_employee, name="create_employee_url"),
+    path('base/create/save', save_employee, name="save_employee_url"),
+    path('sort', sort, name="sort_url"),
+    path('search', search, name="search_url"),
 ]
