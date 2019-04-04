@@ -42,19 +42,20 @@
 
 </head>
 <body>
-     <div>
-        <img width="100px" src="{% static "images/baner.jpg" %}" alt="baner">
-    </div>
 
 
     <div class="container">
         <div class="row" style="background-color: mintcream; border: solid grey 1px">
 
             <div class="col-md-1" >
-                <h3><a href="{% url "workerlist" %}">Home</a></h3>
+                <h3><a href="{% url "workerlist" %}">Hierarchy</a></h3>
             </div>
             <div class="col-md-2">
-                <h3><a href="{% url "workerbase" %}">Employee base</a></h3>
+                {% if request.user.is_authenticated or request.user.is_staff %}
+                    <h3><a href="{% url "workerbase" %}">Employee base</a></h3>
+                {% else %}
+                    <h3>Employee base</h3>
+                {% endif %}
             </div>
             <div class="col-md-6">
 
@@ -77,8 +78,12 @@
 
     <br>
 
+
+
     {% block content %}{% endblock %}
     {% block base %}{% endblock %}
+
+
 
 </body>
 </html>

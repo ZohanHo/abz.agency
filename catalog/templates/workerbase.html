@@ -13,36 +13,29 @@
                         <table style=" width: 100%; background-color:#FDDCA2;">
                             <tr  align="center" valign="center">
                                 <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">
-                                    <form action="{% url "sort_url" %}">
-                                        <input type="text" class="hidden" name="name" value="name">
-                                        <button style="position: absolute; top: 17px; left: 90px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0;; color: firebrick">ФИО</button>
-                                    </form>
+                                   <p class="p_foter" onclick="search_text('name')">Name</p>
                                 </td>
                                 <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">
-                                     <form action="{% url "sort_url" %}">
-                                        <input type="text" class="hidden" name="position" value="position">
-                                        <button style="position: absolute; top: 17px; left: 280px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0;; color: firebrick">Должность</button>
-                                    </form>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 150px">
-                                    <form action="{% url "sort_url" %}">
-                                        <input type="text" class="hidden" name="salary" value="salary">
-                                        <button style="position: absolute; top: 17px; left: 480px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0;; color: firebrick">ЗП</button>
-                                    </form>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 180px">
-                                    <form action="{% url "sort_url" %}">
-                                        <input type="text" class="hidden" name="date" value="date">
-                                        <button style="position: absolute; top: 17px; left: 630px;  display:block; border:0 none; cursor:pointer; outline:none; vertical-align:top;width:0;height:0; color: firebrick">Дата </button>
-                                    </form>
-
+                                     <p class="p_foter" style="" onclick="search_text('employee_position_q')">Position</p>
+                                </td>
+                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">
+                                     <p class="p_foter" onclick="search_text('salary_amount')">Salary</p>
+                                </td>
+                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">
+                                     <p class="p_foter" onclick="search_text('date')">Date</p>
+                                </td>
                             </tr>
                         </table>
+
+
+
+
                         {% if request.user.is_authenticated or request.user.is_staff %}
                         <a href="{% url "create_employee_url" %}"><button style="position: absolute; left: -155px; top: 10px; font-size: 12px" class="btn btn-primary">Добавить сотрудника</button></a>
                         {% endif %}
-                        <div style="position: absolute; right: -175px; top: 10px;">
-                            <form action="{% url "search_url" %}" method="get" class="form-inline" style="">
-                                <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-info" type="submit">Поиск</button>
+                        <div style="position: absolute; right: -150px; top: 10px;">
+                            <form action="" method="get" class="form-inline" style="">
+                                <input id="input" class="form-control" name="search" type="text" placeholder="Search" aria-label="Search">
                             </form>
                         </div>
                     </div>
@@ -51,35 +44,142 @@
             <br>
 
 
+<script>window.jQuery || document.write('<script src="path/to/your/jquery"><\/script>')</script>
+<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 
-        {% for foo in employee %}
-            <div class="container" style="border: solid grey 1px; padding: 20px; background-color: blanchedalmond; border-radius: 8px">
-                <div class="row">
-                    <div class="col-md-2" id="div_image{{ foo.id }}" style="">
-                        <img style="border: solid grey 1px" width=100px" src="{{ foo.foto_employee.url }}" alt="" >
-                    </div>
+{% block page %}
 
-                    <div class="col-md-8" id="div_tr{{ foo.id }}" style="top: 20px">
-                        <table style=" width: 100%; border:0; background-color:#faebd7;">
-                            <tr  align="left" valign="center">
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">ФИО: {{ foo.name }} </td>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 200px">Должность: {{ foo.employee_position_q }}</td>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 150px">ЗП: {{ foo.salary_amount }}</td>
-                                <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width:180px">Дата приема на работу: {{ foo.date }}</td>
-                                {% if request.user.is_authenticated or request.user.is_staff %}
-                                    <a href="{{ foo.get_absolute_url_del }}"><button class="btn btn-danger" form="" style="position: absolute; left: 750px; top: 15px; font-size: 12px">Удалить</button></a>
-                                    <a href="{{ foo.get_absolute_url_update }}"><button style="position: absolute; left: 820px; top: 15px; font-size: 12px" class="btn btn-warning">Редактировать</button></a>
-                                {% endif %}
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <br>
+    <div id="div_sort">
+        {% include 'employees_all_sort.html' %}
+    </div>
+
+{% endblock %}
 
 
 
+<script>
 
-        {% endfor %}
+
+{#    $(document).ready(function () {#}
+{#        $('#button').click(function (event) {#}
+{#            event.preventDefault();#}
+{#            $.ajax({#}
+{#                type: 'GET',#}
+{#                url: '/search_ajax/',#}
+{##}
+{##}
+{#                //Передаем на сервер методом get значение,#}
+{#                data: {#}
+{#                    value_input: $('#input').val(),#}
+{##}
+{##}
+{#                    success: onAjaxSuccess,#}
+{##}
+{#                    error: function () {#}
+{#                        console.log('error');#}
+{#                    },#}
+{#                }#}
+{#            });#}
+{##}
+{#            function onAjaxSuccess(data) {#}
+{##}
+{#                var results = JSON.parse(data);#}
+{#                $('#container').html('');#}
+{##}
+{##}
+{##}
+{##}
+{#                var div_container = $('#div_container');#}
+{#                //div_container.css({border : "solid grey 1px", padding: "40px", backgroundColor: "blanchedalmond", borderRadius: "8px"});#}
+{##}
+{#                $.each(results.result, function (key, value) {#}
+{#                    for(var x=0; x<4; x++){#}
+{#                        //$('.user-container').append(div_image);#}
+{#                        var p = document.createElement("span");#}
+{#                        p.style.border= "solid 1px grey";#}
+{#                        p.style.padding = "10px";#}
+{#                        p.style.backgroundColor = "#faebd7";#}
+{#                        p.style.fontSize = "12px";#}
+{#                        p.style.fontWeight = "800";#}
+{#                        //p.style.margin ="10px";#}
+{#                        //p.style.marginLeft = "185px";#}
+{##}
+{#                        $('.user-container').append(p);#}
+{##}
+{#                        p.append(value[x]);#}
+{##}
+{##}
+{#                    }#}
+{##}
+{#                        console.log("ajax ok");#}
+{#                    });#}
+{#                    //добавляю элемент по id#}
+{#                    //var container = $('.user-container');#}
+{#                    //container.css({padding: "20px"});#}
+{#                    //container.append(button_del);#}
+{#                    //container.append(button_edit);#}
+{#            }#}
+{##}
+{#                //$("#button_del").click(function(event){#}
+{#                    //event.preventDefault();#}
+{#                    //$('#div_container').remove();#}
+{#                //});#}
+{##}
+{#    });#}
+{# });#}
+
+
+
+//sort, search
+    var sort_text = 'date';
+    var search_text_all = '';
+    window.onkeyup = keyup;
+
+    function keyup(event) {
+    search_text_all = event.target.value;
+    sort();
+    }
+
+     function search_text(i) {
+        if (i === undefined) {    //undefined - неопределеноое значение
+            sort_text = 'date'; //если undefined (ненайдено) - сортируем по дате
+        } else {
+            sort_text = i; //sort_text = значению параметра с которым вызвана ф-ция
+        }
+        sort();  //вызываем ajax
+    }
+
+
+    function sort() {
+        $.ajax({
+            type: 'GET',
+            url: '/sort_ajax/',
+            data: {sort_by: sort_text, q_search: search_text_all},
+            success: onAjaxSuccess,
+            error: function () {
+                console.log('error');
+            }
+        });
+        function onAjaxSuccess(data) {
+            //console.log(data);
+
+            // replaceWith - элементы elements будут заменены содержимым content, который может быть задан html-текстом, объектом jQuery или DOM объектом.
+            // Различия функций заключается только в порядке следования содержимого и элементов, которые будут заменены на это содержимое.
+             $("#div_sort").replaceWith(data);
+        }
+    }
+
+
+
+</script>
+
+<style>
+    .p_foter{
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: underline;
+        margin: 0;
+    }
+</style>
 
 {% endblock %}

@@ -29,7 +29,7 @@ class Employee(MPTTModel):
     employee_position_q= models.CharField(max_length=30, choices=CHOICES)
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     salary_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    foto_employee = models.ImageField(upload_to="images/")
+    foto_employee = models.ImageField(blank = False, upload_to="images/%Y/%m/%d", verbose_name = 'employment_photo', help_text = '150x150px' )
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
 

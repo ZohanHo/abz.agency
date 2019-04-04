@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path, re_path, include
-from .views import Workerlist, WorkerBase, delemployee, create_employee, save_employee, update_employee, sort, search
+from .views import *
 
 urlpatterns = [
     path('', Workerlist, name="workerlist"),
@@ -24,6 +24,7 @@ urlpatterns = [
     path('base/<pk>/edit', update_employee, name="update_employee_url"),
     path('base/create/', create_employee, name="create_employee_url"),
     path('base/create/save', save_employee, name="save_employee_url"),
-    path('sort', sort, name="sort_url"),
-    path('search', search, name="search_url"),
+    #path('search', search, name="search_url"),
+    #path('search_ajax/', search_ajax, name="search_ajax_url"),
+    path('sort_ajax/', sort_ajax, name="sort_ajax_url"),
 ]

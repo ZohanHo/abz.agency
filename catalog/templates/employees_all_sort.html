@@ -1,0 +1,81 @@
+<div id="div_sort">
+    {% for foo in employees %}
+        <div class="container" style="border: solid grey 1px; padding: 20px; background-color: blanchedalmond; border-radius: 8px">
+            <div class="row">
+                <div class="col-md-2" id="div_image" style="">
+                    <img  class="open_fast" style="border: solid grey 1px; border-radius: 50px" width=100px" src="{{ foo.foto_employee.url }}" alt=""  >
+                </div>
+                <div class="col-md-10" id="div_tr{{ foo.id }}" style="top: 20px">
+                    <table style=" width: 100%; border:0; background-color:#faebd7;">
+                        <tr  align="left" valign="center">
+                            <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 150px">
+                                <a style="text-decoration: underline; color:black" href="{{ foo.get_absolute_url_update }}">ФИО: {{ foo.name }}</a>
+                            </td>
+                            <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 150px">Должность: {{ foo.employee_position_q }}</td>
+                            <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width: 150px">ЗП: {{ foo.salary_amount }}</td>
+                            <td style="border: solid 1px grey; padding: 10px; font-size: 12px; font-weight: 800; height: 50px; width:150px">Дата приема на работу: {{ foo.date }}</td>
+                            <td style="border: solid 1px grey;padding: 10px 49px 10px; font-size: 12px; font-weight: 800; height: 50px; width:150px"><a style="text-align: center; margin: 0" href="{{ foo.get_absolute_url_del }}"><button style="border-radius: 5px; padding: 5px 10px 5px" class="btn btn-danger">DELETE</button></a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+</div>
+
+
+<div class="popup_fast"></div>
+<div class="bg_popup" style=""></div>
+
+<script>
+
+    //Считывает атрибут src с картинки работника и отрисовует в popup
+    $('.open_fast').click(function () { // Описуем что будет происходить по клику на кнопку с класом .open_fast
+        var i_path =$(this).attr("src");
+        var popup_fast = $('.popup_fast');
+        popup_fast.html('<img style="width: 250px" src="'+ i_path + '">');
+        popup_fast.css({"top": $(window).scrollTop() + 220}).addClass('active'); // ccs свойство top, проскроливать + 220
+        var bg_popup = $('.bg_popup');
+        bg_popup.fadeIn(); // fadeIn() - плавно появляется
+        bg_popup.click(function () {   // удаляем при нажати на на люьом месте кроме окна котрое появилось
+        $('.popup_fast').removeClass('active');
+        bg_popup.fadeOut();
+        });
+     });
+
+</script>
+
+<style>
+
+    /* свойства отображаемого окна popup */
+    .popup_fast {
+    width: 192px;
+    height:192px;
+    z-index: 100;
+    padding: 0 0 0 0;
+    position: absolute;
+    top: 25%;
+    left: -500px;
+    right: 0;
+    margin: auto; /* оцентровка по центру */
+    display: none; /* изначально скрыт */
+    }
+
+
+    .popup_fast.active   {
+        display: block;
+    }
+
+    .bg_popup {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        background: rgba(0, 0, 0, 0);
+        display: none;
+    }
+
+</style>
