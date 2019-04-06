@@ -27,9 +27,6 @@
                             </tr>
                         </table>
 
-
-
-
                         {% if request.user.is_authenticated or request.user.is_staff %}
                         <a href="{% url "create_employee_url" %}"><button style="position: absolute; left: -155px; top: 10px; font-size: 12px" class="btn btn-primary">Добавить сотрудника</button></a>
                         {% endif %}

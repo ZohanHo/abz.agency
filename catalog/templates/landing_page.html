@@ -4,30 +4,42 @@
 
 {% block content %}
 
-    <div class="container" >
-        <div class="row">
-            <div class="col-md-8" style="background-color: mintcream; border: solid grey 1px">
-                {% load mptt_tags %}
 
-                <ul style="margin: 10px">
-                    {% recursetree employee %}
-                        <li style="list-style-type: none">
-                            <div>
-                                <h4 style="border: solid grey 1px; background-color: orange">ФИО: {{ node.name }} Должность: {{ node.employee_position_q }}</h4>
-                                {% if not node.is_leaf_node %}
-                                    <ul class="children">
-                                        {{ children }}
-                                    </ul>
-                                {% endif %}
-                            </div>
-                        </li>
-                    {% endrecursetree %}
-                </ul>
-            </div>
-        </div>
-    </div>
+
+
+
+<div id="div_new">
+    {% include 'node.html' %}
+</div>
+
+<script>
+
+
+
+    function run_show(i){
+        children_id = i;
+        console.log(children_id);
+        show()
+    }
+
+    function show() {
+        $.ajax({
+            type: 'GET',
+            url: '/',
+            data: {children_id_to_views: children_id}, //key - имя get запроса: value - то что указали в параметре
+            success: onAjaxSuccess,
+            error: function () {
+                console.log('error Ajax');
+            }
+        });
+
+        function onAjaxSuccess(data) {
+             $("#div_new").replaceWith(data);
+            console.log(data);
+
+        }
+    }
+
+</script>
 
 {% endblock %}
-
-
-

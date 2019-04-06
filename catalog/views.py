@@ -5,15 +5,44 @@ from django.db.models import Q
 import json
 
 
+
+
+
 def Workerlist(request):
-    employee = Employee.objects.all()
-    return render(request, 'landing_page.html', context={'employee': employee})
+    global employees
+
+    if request.is_ajax():
+
+        #employees = Employee.objects.all()
+
+        #Счтитываем id работника (передавая его через get (onclick="run_show({{ node.id }})"))
+        text = request.GET['children_id_to_views']
+
+        # Выбираем конкретный елемент по id
+        node = Employee.objects.get(id=text)
+        print(node.level)
+        #get_descendants - создает кверисет с потомками в иерархическом порядке, фильтруем + 3 мвксимум
+        employees = node.get_descendants(include_self = "True").filter(level__lte=node.level + 3)
+
+
+        data = {}
+        data['employees'] = employees
+        response = render(request, 'node.html', {'employees': employees})
+        return response
+
+    else:
+        employees = Employee.objects.all()#.filter(level__lte=1)
+        return render(request, "landing_page.html", {'employees': employees})
+
+
+
+
+
 
 
 def WorkerBase(request):
-    employee = Employee.objects.all()
-    return render(request, 'workerbase.html', context={'employees': employee})
-
+    employees = Employee.objects.all()
+    return render(request, 'workerbase.html', context={'employees': employees})
 
 def delemployee(request, pk):
     if request.user.is_authenticated:
