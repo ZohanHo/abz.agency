@@ -3,6 +3,7 @@ from .models import Employee, Position
 from .form import AddEmployeeForm
 from django.db.models import Q
 import json
+import catalog.seed
 
 
 

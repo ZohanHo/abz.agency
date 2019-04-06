@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'bootstrap3',
+    'django_seed',
 ]
 
 SOCIALACCOUNT_QUERY_EMAIL = True
