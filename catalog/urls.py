@@ -18,13 +18,12 @@ from django.urls import path, re_path, include
 from .views import *
 
 urlpatterns = [
-    path('', Workerlist, name="workerlist"),
+    path('', task, name="task_url"),
+    path('worker/', Workerlist, name="workerlist"),
     path('base/', WorkerBase, name="workerbase"),
     path('base/<pk>/del', delemployee, name="del_employee"),
     path('base/<pk>/edit', update_employee, name="update_employee_url"),
     path('base/create/', create_employee, name="create_employee_url"),
     path('base/create/save', save_employee, name="save_employee_url"),
-    #path('search', search, name="search_url"),
-    #path('search_ajax/', search_ajax, name="search_ajax_url"),
     path('sort_ajax/', sort_ajax, name="sort_ajax_url"),
 ]

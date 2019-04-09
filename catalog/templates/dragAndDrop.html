@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DragDrop</title>
+
+    <style>
+        body{
+            background-color: darksalmon;
+        }
+        .fill {
+            background-image: url("https://cognitiveclass.ai/wp-content/uploads/2016/04/bdu-course-images-35-150x150.jpg");
+            position: relative;
+            height: 150px;
+            width: 150px;
+            top: 6px;
+            left: 4.5px;
+            right: 3px;
+            bottom: 3px;
+            cursor: pointer;
+        }
+        .empty {
+            display: inline-block;
+            height: 160px;
+            width: 160px;
+            margin: 10px;
+            border: 3px salmon solid;
+            background-color: white;
+        }
+        .hold {
+            border: solid grey 4px;
+        }
+        .hovered {
+            background: white;
+{#            border-style: dashed;#}
+
+        }
+
+        .invisible {
+            display: none;
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+
+<div class="empty">
+    <div class="fill" draggable="true"></div>
+</div>
+<div class="empty"></div>
+<div class="empty"></div>
+<div class="empty"></div>
+<div class="empty"></div>
+
+
+<script>
+    const fill = document.querySelector(".fill");
+    const empties = document.querySelectorAll(".empty");
+
+    fill.addEventListener("dragstart", dragStart);
+    fill.addEventListener("dragend", dragEnd);
+
+    for(const empty of empties){
+        empty.addEventListener('dragover', dragOver);
+        empty.addEventListener('dragenter', dragEnter);
+        empty.addEventListener('dragLeave', dragLeave);
+        empty.addEventListener('drop', dragDrop);
+    }
+
+    
+    function dragStart() {
+        this.className += " hold";
+        setTimeout(() => (this.className = ' invisible'), 0);
+
+    }
+
+    function dragEnd() {
+        this.className = " fill";
+
+    }
+    
+    function dragOver(e) {
+        e.preventDefault();
+    }
+
+    function dragEnter(e) {
+        e.preventDefault();
+        this.className += " hovered";
+        console.log("enter")
+    }
+
+    function dragLeave() {
+        this.className = " empty";
+        console.log("leave")
+    }
+
+    function dragDrop() {
+        this.className = " empty";
+        this.append(fill);
+        console.log("drop")
+    }
+
+</script>
+
+</body>
+</html>
+
+

@@ -3,24 +3,51 @@
 
     <div class="container" >
         <div class="row">
-            <div class="col-md-8" style="background-color: mintcream; border: solid grey 1px">
+            <div class="col-md-9" style="background-color: mintcream; border: solid grey 1px">
                 {% load mptt_tags %}
-                <ul style="margin: 10px">
-                    {% recursetree employees %}
-                        <li style="list-style-type: none">
-                            <div>
-                                <h4 onclick="run_show({{ node.id }})" style="border: solid grey 1px; background-color: orange">ФИО: {{ node.name }} Должность: {{ node.employee_position_q }}</h4>
-                                {% if not node.is_leaf_node %}
-                                    <ul class=>
-                                        {{ children }}
-                                    </ul>
-                                {% endif %}
-                            </div>
-                        </li>
-                    {% endrecursetree %}
-                </ul>
+                    <ul style="margin: 5px">
+                        {% recursetree employees %}
+                            <li style="list-style-type: none">
+                                <div style="" >
+                                    <h4 style="border: solid black 1px; background-color: orange; margin: 5px 0 0"><button onclick="run_show({{ node.id }})" style="background-color: orange; border: none">+</button>ФИО: {{ node.name }} Должность: {{ node.employee_position_q }}</h4>
+                                    {% if not node.is_leaf_node %}
+                                        <ul style="margin: 5px 0 0">{{ children }}</ul>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endrecursetree %}
+                    </ul>
             </div>
         </div>
     </div>
+    <br>
+
+
+    <script>
+
+        function run_show(i){
+            children_id = i;
+            console.log(children_id);
+            show()
+        }
+
+        function show() {
+            $.ajax({
+                type: 'GET',
+                url: '/worker/',
+                data: {children_id_to_views: children_id}, //key - имя get запроса: value - то что указали в параметре
+                success: onAjaxSuccess,
+                error: function () {
+                    console.log('error Ajax');
+                }
+            });
+
+            function onAjaxSuccess(data) {
+                 $("#div_new").replaceWith(data);
+                console.log(data);
+            }
+        }
+
+    </script>
 
 </div>

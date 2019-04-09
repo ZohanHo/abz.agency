@@ -4,42 +4,9 @@
 
 {% block content %}
 
+    <div id="div_new">
+        {% include 'node.html' %}
+    </div>
 
-
-
-
-<div id="div_new">
-    {% include 'node.html' %}
-</div>
-
-<script>
-
-
-
-    function run_show(i){
-        children_id = i;
-        console.log(children_id);
-        show()
-    }
-
-    function show() {
-        $.ajax({
-            type: 'GET',
-            url: '/',
-            data: {children_id_to_views: children_id}, //key - имя get запроса: value - то что указали в параметре
-            success: onAjaxSuccess,
-            error: function () {
-                console.log('error Ajax');
-            }
-        });
-
-        function onAjaxSuccess(data) {
-             $("#div_new").replaceWith(data);
-            console.log(data);
-
-        }
-    }
-
-</script>
 
 {% endblock %}

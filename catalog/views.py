@@ -3,14 +3,11 @@ from .models import Employee, Position
 from .form import AddEmployeeForm
 from django.db.models import Q
 import json
-import catalog.seed
-
-
-
+#from catalog import seed
 
 
 def Workerlist(request):
-    global employees
+    #global employees
 
     if request.is_ajax():
 
@@ -19,12 +16,11 @@ def Workerlist(request):
         #Счтитываем id работника (передавая его через get (onclick="run_show({{ node.id }})"))
         text = request.GET['children_id_to_views']
 
-        # Выбираем конкретный елемент по id
+        # insert id
         node = Employee.objects.get(id=text)
-        print(node.level)
-        #get_descendants - создает кверисет с потомками в иерархическом порядке, фильтруем + 3 мвксимум
-        employees = node.get_descendants(include_self = "True").filter(level__lte=node.level + 3)
 
+        #get_descendants - создает queryset с потомками в иерархическом порядке, filter + 3 max
+        employees = node.get_descendants(include_self = "True").filter(level__lte=node.level + 3)
 
         data = {}
         data['employees'] = employees
@@ -34,11 +30,6 @@ def Workerlist(request):
     else:
         employees = Employee.objects.all()#.filter(level__lte=1)
         return render(request, "landing_page.html", {'employees': employees})
-
-
-
-
-
 
 
 def WorkerBase(request):
@@ -68,6 +59,8 @@ def save_employee(request):
         new.salary_amount = request.POST.get("salary_amount")
         new.foto_employee = request.POST.get("foto_employee")
         new.employee_position_q = request.POST.get("employee_position_q")
+        patent_id = request.POST.get("parent")
+        new.parent = Employee.objects.get(id=patent_id)
         new.save()
     return redirect("workerbase")
 
@@ -160,3 +153,6 @@ def sort_ajax(request):
             return render(request, 'workerbase.html', context)
     else:
         return HttpResponseRedirect('/accounts/login/')
+
+def task(request):
+    return render(request, "task.html")
