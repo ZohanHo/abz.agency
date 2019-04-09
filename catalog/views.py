@@ -7,7 +7,7 @@ import json
 
 
 def Workerlist(request):
-    #global employees
+    global employees
 
     if request.is_ajax():
 
